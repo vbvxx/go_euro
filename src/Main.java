@@ -3,6 +3,7 @@ import http.Connector;
 import http.MalformatedURIException;
 import json.JacksonObjectMapper;
 import json.JacksonParseException;
+import json.JsonEmptyException;
 import model.CityInfo;
 import writer.CSVWriter;
 import writer.CSVWriterException;
@@ -16,26 +17,20 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //String city = args[0];
-        String city = "Los Angeles";
-        String jsonResponse = null;
+        String city = args[0];
+        if(city == ""){
+            System.out.println("empty arg not allowed");
+            System.exit(0);
+        }
+        String jsonResponse;
         try {
             jsonResponse = Connector.GetJSON(city);
-            ArrayList<CityInfo> cityInfos = null;
+            ArrayList<CityInfo> cityInfos;
             cityInfos = JacksonObjectMapper.readJSON(jsonResponse);
             CSVWriter.writeCSV(cityInfos);
             System.exit(1);
-        } catch (BadContentTypeException badContentTypeException) {
-            badContentTypeException.printStackTrace();
-            System.exit(0);
-        } catch (JacksonParseException jacksonParseException) {
-            jacksonParseException.printStackTrace();
-            System.exit(0);
-        } catch (CSVWriterException csvWriterException) {
-            csvWriterException.printStackTrace();
-            System.exit(0);
-        } catch (MalformatedURIException malformatedURIException) {
-            malformatedURIException.printStackTrace();
+        } catch (BadContentTypeException | JacksonParseException | CSVWriterException | MalformatedURIException | JsonEmptyException exception) {
+            exception.printStackTrace();
             System.exit(0);
         }
     }

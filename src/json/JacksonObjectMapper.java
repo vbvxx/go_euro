@@ -12,11 +12,15 @@ import java.util.ArrayList;
  */
 public class JacksonObjectMapper {
 
-    public static ArrayList<CityInfo> readJSON(String dataJson) throws JacksonParseException {
+    public static ArrayList<CityInfo> readJSON(String dataJson) throws JacksonParseException, JsonEmptyException {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<CityInfo> cityInfo = new ArrayList<CityInfo>();
         try {
             cityInfo = objectMapper.readValue(dataJson, new TypeReference<ArrayList<CityInfo>>(){});
+            if(cityInfo.isEmpty()) {
+                throw new JsonEmptyException("Json is empty");
+            }
+
         } catch (IOException e) {
             throw new JacksonParseException("Failure while parsing JSON");
         }
