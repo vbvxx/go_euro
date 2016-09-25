@@ -26,7 +26,6 @@ public class CSVWriter {
 
             Path p = Paths.get("./cityInfos.csv");
             boolean notExists = Files.notExists(p);
-            System.out.println(notExists);
             fileWriter = new FileWriter(FILE_NAME,true);
             if(notExists){
                 fileWriter.append(FILE_HEADER.toString());

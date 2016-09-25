@@ -14,7 +14,7 @@ public class JacksonObjectMapper {
 
     public static ArrayList<CityInfo> readJSON(String dataJson) throws JacksonParseException, JsonEmptyException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayList<CityInfo> cityInfo = new ArrayList<CityInfo>();
+        ArrayList<CityInfo> cityInfo;
         try {
             cityInfo = objectMapper.readValue(dataJson, new TypeReference<ArrayList<CityInfo>>(){});
             if(cityInfo.isEmpty()) {

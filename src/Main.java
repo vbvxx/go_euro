@@ -17,9 +17,13 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String city = args[0];
-        if(city == ""){
+        if(args.length == 0) {
             System.out.println("empty arg not allowed");
+            System.exit(0);
+        }
+        String city = args[0];
+        if(city.equals(null)){
+            System.out.println("city is null");
             System.exit(0);
         }
         String jsonResponse;
